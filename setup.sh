@@ -10,13 +10,11 @@ sudo pip3 install pyyaml
 sudo pip3 install pyparse
 sudo pip3 install parse
 sudo pip3 install pyaes
-sudo python3 setup.py gen_tl
+sudo pip3 install pandas
+sudo pip3 install pymongo
 sudo python3 setup.py install
 sudo npm install
 sudo npm link
 
-echo "First, Create a telegram account... For more info read the README.md and README2.md"
-echo "...And Then... Go here and get an API key and hash under Dev Tools: https://my.telegram.org/auth"
-echo "...And Then... Input your hash and key and phone into trader.py..."
-echo "then input your poloniex (preferred) Key and hash into conf-example.js"
-echo "...And Then... sudo python3 trader.py"
+echo "Input your poloniex (preferred) Key and hash into conf-example.js"
+echo "...And Then... sudo python3 macdtrader.py... the database will fill on each round... this takes awhile... but the database will fill eventually and the program should become faster... Happy trading!"
