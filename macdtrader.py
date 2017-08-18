@@ -186,15 +186,15 @@ def run():
                 if float2 > 0:
                     ke1=word.replace('BTC_', '')
                     ke3='-BTC'
-                    ke4=ke1+ke3
-                    buystr=ke4
+                    ke8=ke1+ke3
+                    buystr=ke8
                     m = buy()
                     m.start()
                 else:
                     ke1=word.replace('BTC_', '')
                     ke3='-BTC'
-                    ke4=ke1+ke3
-                    sellstr=ke4
+                    ke10=ke1+ke3
+                    sellstr=ke10
                     m = sell()
                     m.start()
 
