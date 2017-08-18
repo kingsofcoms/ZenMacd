@@ -183,7 +183,7 @@ def run():
                 float1=m.group(1)
                 print(word, float1)
                 float2 = int(float(float1))
-                if float2 > 0:
+                if float2 > .05:
                     ke1=word.replace('BTC_', '')
                     ke3='-BTC'
                     ke8=ke1+ke3
@@ -205,7 +205,7 @@ def buybuy():
     global buystr
     variable=str(buystr)
     variablestr=str(variable)
-    print('Starting Sell Of: ' + variablestr + ' -- Please always sell 100% and buy with low percentage.')
+    print('Starting BUY Of: ' + variablestr + ' -- Please always sell 100% and buy with low percentage.')
     process1='./zenbot.sh buy --order_adjust_time=10000 --markup_pct=0 --debug  poloniex.' + variablestr	
     proc1 = subprocess.Popen(process1,shell=True)
 def sell():
@@ -215,7 +215,7 @@ def sellsell():
     global sellstr
     variable=str(sellstr)
     variablestr=str(variable)
-    print('Starting Sell Of: ' + variablestr + ' -- Please always sell 100% and buy with low percentage.')
+    print('Starting SELL Of: ' + variablestr + ' -- Please always sell 100% and buy with low percentage.')
     process1='./zenbot.sh sell --order_adjust_time=10000 --markup_pct=0 --debug  poloniex.' + variablestr	
     proc1 = subprocess.Popen(process1,shell=True)
 
@@ -229,9 +229,9 @@ def sellsell():
 
 if __name__ == '__main__':
     from poloniex import Poloniex
-    logging.basicConfig(level=logging.DEBUG)
-    logging.getLogger("poloniex").setLevel(logging.INFO)
-    logging.getLogger('requests').setLevel(logging.ERROR)
+    #logging.basicConfig(level=logging.DEBUG)
+    #logging.getLogger("poloniex").setLevel(logging.INFO)
+    #logging.getLogger('requests').setLevel(logging.ERROR)
     api = Poloniex(jsonNums=float)
     run()
 
