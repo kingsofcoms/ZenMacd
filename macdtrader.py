@@ -5,7 +5,7 @@ from operator import itemgetter
 from pymongo import MongoClient
 import pandas as pd
 import numpy as np
-import json, requests, re, multiprocessing, subprocess
+import json, requests, re, multiprocessing, subprocess, time
 global buystr
 global sellstr
 logger = logging.getLogger(__name__)
@@ -165,6 +165,7 @@ class Chart(object):
         return df
 def run():
     while True:
+        time.sleep(5)
         global buystr
         global sellstr
         # EXAMPLE WITH ALL STRINGS: word_list = ["BTC_DCR", "BTC_LTC", "BTC_NAUT", "BTC_NXT", "BTC_XCP", "BTC_GRC", "BTC_REP", "BTC_PPC", "BTC_RIC", "BTC_STRAT", "BTC_GAME", "BTC_BTM", "BTC_CLAM", "BTC_ARDR", "BTC_BLK", "BTC_OMNI", "BTC_SJCX", "BTC_FLDC", "BTC_BCH", "BTC_DOGE", "BTC_POT", "BTC_VRC", "BTC_ETH", "BTC_PINK", "BTC_NOTE", "BTC_BTS", "BTC_AMP", "BTC_NAV", "BTC_BELA", "BTC_BCN", "BTC_ETC", "BTC_FLO", "BTC_VIA", "BTC_XBC", "BTC_XPM", "BTC_DASH", "BTC_XVC", "BTC_GNO", "BTC_NMC", "BTC_RADS", "BTC_VTC", "BTC_XEM", "BTC_FCT", "BTC_XRP", "BTC_NXC", "BTC_STEEM", "BTC_SBD", "BTC_BURST", "BTC_XMR", "BTC_DGB", "BTC_LBC", "BTC_BCY", "BTC_PASC", "BTC_SC", "BTC_LSK", "BTC_EXP", "BTC_MAID", "BTC_BTCD", "BTC_SYS", "BTC_GNT", "BTC_HUC", "BTC_EMC2", "BTC_NEOS", "BTC_ZEC", "BTC_STR"]
@@ -183,7 +184,7 @@ def run():
                 float1=m.group(1)
                 print(word, float1)
                 float2 = int(float(float1))
-                if float2 > .05:
+                if float2 > .5:
                     ke1=word.replace('BTC_', '')
                     ke3='-BTC'
                     ke8=ke1+ke3
@@ -207,7 +208,7 @@ def buybuy():
     variablestr=str(variable)
     print('Starting BUY Of: ' + variablestr + ' -- Please always sell 100% and buy with low percentage.')
     process1='./zenbot.sh buy --order_adjust_time=10000 --markup_pct=0 --debug  poloniex.' + variablestr	
-    proc1 = subprocess.Popen(process1,shell=True)
+    subprocess.Popen(process1,shell=True)
 def sell():
     return multiprocessing.Process(target = sellsell , args = ())
  
@@ -217,7 +218,7 @@ def sellsell():
     variablestr=str(variable)
     print('Starting SELL Of: ' + variablestr + ' -- Please always sell 100% and buy with low percentage.')
     process1='./zenbot.sh sell --order_adjust_time=10000 --markup_pct=0 --debug  poloniex.' + variablestr	
-    proc1 = subprocess.Popen(process1,shell=True)
+    subprocess.Popen(process1,shell=True)
 
 
 
@@ -229,9 +230,9 @@ def sellsell():
 
 if __name__ == '__main__':
     from poloniex import Poloniex
-    #logging.basicConfig(level=logging.DEBUG)
-    #logging.getLogger("poloniex").setLevel(logging.INFO)
-    #logging.getLogger('requests').setLevel(logging.ERROR)
+    logging.basicConfig(level=logging.DEBUG)
+    logging.getLogger("poloniex").setLevel(logging.INFO)
+    logging.getLogger('requests').setLevel(logging.ERROR)
     api = Poloniex(jsonNums=float)
     run()
 
