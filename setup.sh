@@ -17,4 +17,7 @@ sudo npm install
 sudo npm link
 
 echo "Input your poloniex (preferred) Key and hash into conf-example.js"
+echo " "
 echo "...And Then... sudo python3 macdtrader.py... the database will fill on each round... this takes awhile... but the database will fill eventually and the program should become faster... Happy trading!"
+echo " "
+echo "...and if you get errors on analytics modules... do: sudo rm -rf node_modules && sudo npm install && sudo npm link"
