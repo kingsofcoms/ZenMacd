@@ -171,7 +171,6 @@ def run():
         word_list = ["BTC_BCH", "BTC_ETH", "BTC_LTC", "BTC_DASH", "BTC_XRP", "BTC_FCT", "BTC_STRAT", "BTC_STR", "BTC_ETC", "BTC_XMR"]
         # Let's just use 5 for now... keeps things going quicker.
         for word in word_list:
-            time.sleep(5)
             df = Chart(api, word).dataFrame()
             df.dropna(inplace=False)
             data = (df.tail(2)[['macd']])
@@ -191,7 +190,7 @@ def run():
                 float3 = float(float1)
                 float4 = float(float2)
                 # Dont worry about below... it buys only when macd is increasing else sell... can be good if trades go through quick.
-                if float3 < float4:
+                if float3 > .0001 and float4 > float3:
                     ke1=word.replace('BTC_', '')
                     ke3='-BTC'
                     ke8=ke1+ke3
