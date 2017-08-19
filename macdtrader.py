@@ -183,8 +183,8 @@ def run():
                 float1=m.group(1)
                 print(word, float1)
                 float2 = float(float1)
-                # Set the below number for minimum macd buy 0.00005 seems good to prevent worthless coins from skewing your results or dont pick those ie DGB....
-                if float2 > .00005:
+                # Set the below number for minimum macd buy... basically if its going up or down.. .0001 seems better, but this can delay a buy. Don't pick ie DGB.. Too much price Flux..
+                if float2 > .0001:
                     ke1=word.replace('BTC_', '')
                     ke3='-BTC'
                     ke8=ke1+ke3
