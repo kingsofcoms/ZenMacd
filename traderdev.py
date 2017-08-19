@@ -189,18 +189,23 @@ def run():
                 print(word, float1, float2)
                 float3 = float(float1)
                 float4 = float(float2)
+                diff = float(abs(float4) - abs(float3))
+                diffstr = str(diff)
                 # Dont worry about below... it buys only when macd is increasing else sell... can be good if trades go through quick.
-                if float4 > .00005 and float4 > float3:
+                if float4 > 0.00005 and float4 > float3:
+                    print('Current diff is: ' + diffstr)
                     ke1=word.replace('BTC_', '')
                     ke3='-BTC'
                     ke8=ke1+ke3
                     buystr=ke8
                     m = buy()
                     m.start()
-                elif float4 > .00005 and (abs(float4) - abs(float3)) < .000005:
-                    print('Doing nothing on minor negative macd flux down to .000005')
-                    # Do nothing on a minor negative flux in macd .000005
+                elif float4 > 0.00005 and 0.000005 > diff:
+                    print('Current diff is: ' + diffstr)
+                    print('Doing nothing on minor flux down to 0.000005')
+                    # Do nothing on a minor negative flux in macd 0.000005
                 else:
+                    print('Current diff is: ' + diffstr)
                     ke1=word.replace('BTC_', '')
                     ke3='-BTC'
                     ke10=ke1+ke3
