@@ -171,7 +171,6 @@ def run():
         word_list = ["BTC_BCH", "BTC_ETH", "BTC_LTC", "BTC_DASH", "BTC_XRP", "BTC_FCT", "BTC_STRAT", "BTC_STR", "BTC_ETC", "BTC_XMR"]
         # Let's just use 5 for now... keeps things going quicker.
         for word in word_list:
-            time.sleep(5)
             df = Chart(api, word).dataFrame()
             df.dropna(inplace=False)
             data = (df.tail(1)[['macd']])
