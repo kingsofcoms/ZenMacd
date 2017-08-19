@@ -189,7 +189,7 @@ def run():
                 print(word, float1, float2)
                 float3 = float(float1)
                 float4 = float(float2)
-                diff = float(abs(float4) - abs(float3))
+                diff = float(abs(abs(float4) - abs(float3)))
                 diffstr = str(diff)
                 # Dont worry about below... it buys only when macd is increasing else sell... can be good if trades go through quick.
                 if float4 > 0.00005 and float4 > float3:
