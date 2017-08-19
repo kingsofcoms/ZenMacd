@@ -191,7 +191,7 @@ def run():
                 float3 = float(float1)
                 float4 = float(float2)
                 # Dont worry about below... it buys only when macd is increasing else sell... can be good if trades go through quick.
-                if float4 > float3:
+                if float3 < float4:
                     ke1=word.replace('BTC_', '')
                     ke3='-BTC'
                     ke8=ke1+ke3
