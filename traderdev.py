@@ -197,6 +197,9 @@ def run():
                     buystr=ke8
                     m = buy()
                     m.start()
+                elif float4 > .00005 and (abs(float4) - abs(float3)) < .000005:
+                    donothing='donothing'
+                    # Do nothing on a minor negative flux in macd .000005
                 else:
                     ke1=word.replace('BTC_', '')
                     ke3='-BTC'
