@@ -96,8 +96,9 @@ c.profit_stop_pct = 1
 
 // avoid trading at a slippage above this pct
 c.max_slippage_pct = 5
-// buy with this % of currency balance (WARNING : sim won't work properly if you set this value to 100) 
-c.buy_pct = 25
+// buy with this % of currency balance (WARNING : sim won't work properly if you set this value to 100)
+// The more you decrease this the more you will get fees. 50/50 seems okay for now.. any suggestions? But I run at 25% for dev testing.
+c.buy_pct = 50
 // sell with this % of asset balance (WARNING : sim won't work properly if you set this value to 100)
 c.sell_pct = 100
 // ms to adjust non-filled order after
