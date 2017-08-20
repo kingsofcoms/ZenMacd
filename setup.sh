@@ -1,6 +1,6 @@
 
 sudo apt update
-sudo apt install python-setuptools python3 python3-pip mongodb libcurl4-openssl-dev libssl-dev dialog jq curl python-pyaes build-essential
+sudo apt install python-setuptools python3 python3-pip mongodb libcurl4-openssl-dev libssl-dev dialog jq curl build-essential
 sudo curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo dpkg --configure -a
