@@ -5,7 +5,7 @@ from operator import itemgetter
 from pymongo import MongoClient
 import pandas as pd
 import numpy as np
-import json, requests, re, multiprocessing, subprocess
+import json, requests, re, multiprocessing, subprocess, time
 global buystr
 global sellstr
 logger = logging.getLogger(__name__)
@@ -186,25 +186,32 @@ def run():
             if m:
                 float1=m.group(1)
                 float2=m.group(2)
-                print(word, float1, float2)
                 float3 = float(float1)
                 float4 = float(float2)
                 diff = float(abs(abs(float4) - abs(float3)))
                 diffstr = str(diff)
                 # Dont worry about below... it buys only when macd is increasing else sell... can be good if trades go through quick.
-                if float4 > 0.00005 and float4 > float3:
-                    print('Current diff is: ' + diffstr)
-                    ke1=word.replace('BTC_', '')
-                    ke3='-BTC'
-                    ke8=ke1+ke3
-                    buystr=ke8
-                    m = buy()
-                    m.start()
-                elif float4 > 0.00005 and 0.000005 > diff:
-                    print('Current diff is: ' + diffstr)
-                    print('Doing nothing on minor flux down to 0.000005')
-                    # Do nothing on a minor negative flux in macd 0.000005
+                if (float4 > 0.00005):
+                    if (0.000005 > diff):
+                        print(word, float1, float2)
+                        print('Current diff is: ' + diffstr)
+                        print('Doing nothing on minor flux down to 0.000005')
+                    elif (float4 > float3):
+                        print(word, float1, float2)
+                        print('Current diff is: ' + diffstr)
+                        ke1=word.replace('BTC_', '')
+                        ke3='-BTC'
+                        ke8=ke1+ke3
+                        buystr=ke8
+                        m = buy()
+                        m.start()
+                        # Do nothing on a minor negative flux in macd 0.000005
+
+                    else:
+                        print('Waiting for profits')
+
                 else:
+                    print(word, float1, float2)
                     print('Current diff is: ' + diffstr)
                     ke1=word.replace('BTC_', '')
                     ke3='-BTC'
@@ -249,7 +256,4 @@ if __name__ == '__main__':
     #logging.getLogger('requests').setLevel(logging.ERROR)
     api = Poloniex(jsonNums=float)
     run()
-
-
-
-    
+   
