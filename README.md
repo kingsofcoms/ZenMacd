@@ -17,7 +17,7 @@
 
 ## Quick-start
 
-### 1. Requirements: Windows, Linux or OSX or Docker, [Node.js](https://nodejs.org/) and [MongoDB](https://www.mongodb.com/) and Python3.
+### 1. Requirements: Ubuntu Xenial
 
 ### 2. Install zenbot 4:
 
@@ -35,7 +35,23 @@ sudo sh setup.sh
 Make sure to input your poloniex API KEY and HASH into conf-example.js
 
 
-Follow the on-screen instructions, make sure to read README.md
+Follow the on-screen instructions.
+
+
+To update your coin pairs navigate to:
+```
+cd extensions/exchanges/poloniex
+```
+Then do:
+```
+sudo chmod 777 update-products.sh
+sudo ./update-products.sh
+```
+
+### Note:
+If you set your buy% to anything other than 100% you will get more trade fees!!
+This stuff takes a close eye, it can work fine for an hour alone maybe tops, but you absolutely want to check for order activity. IE. If an order is on hold in poloniex, then make sure that order is being adjusted through the shell window.
+
 
 
 ### Running:
