@@ -255,7 +255,4 @@ if __name__ == '__main__':
     #logging.getLogger('requests').setLevel(logging.ERROR)
     api = Poloniex(jsonNums=float)
     run()
-
-
-
     
