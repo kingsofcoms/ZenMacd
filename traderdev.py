@@ -168,22 +168,25 @@ def run():
     while True:
         global buystr
         global sellstr
-        # EXAMPLE WITH ALL STRINGS: word_list = ["BTC_DCR", "BTC_LTC", "BTC_NAUT", "BTC_NXT", "BTC_XCP", "BTC_GRC", "BTC_REP", "BTC_PPC", "BTC_RIC", "BTC_STRAT", "BTC_GAME", "BTC_BTM", "BTC_CLAM", "BTC_ARDR", "BTC_BLK", "BTC_OMNI", "BTC_SJCX", "BTC_FLDC", "BTC_BCH", "BTC_DOGE", "BTC_POT", "BTC_VRC", "BTC_ETH", "BTC_PINK", "BTC_NOTE", "BTC_BTS", "BTC_AMP", "BTC_NAV", "BTC_BELA", "BTC_BCN", "BTC_ETC", "BTC_FLO", "BTC_VIA", "BTC_XBC", "BTC_XPM", "BTC_DASH", "BTC_XVC", "BTC_GNO", "BTC_NMC", "BTC_RADS", "BTC_VTC", "BTC_XEM", "BTC_FCT", "BTC_XRP", "BTC_NXC", "BTC_STEEM", "BTC_SBD", "BTC_BURST", "BTC_XMR", "BTC_DGB", "BTC_LBC", "BTC_BCY", "BTC_PASC", "BTC_SC", "BTC_LSK", "BTC_EXP", "BTC_MAID", "BTC_BTCD", "BTC_SYS", "BTC_GNT", "BTC_HUC", "BTC_EMC2", "BTC_NEOS", "BTC_ZEC", "BTC_STR"]
+        # Below is the coin list, please follow its format... I choose coins with volume above 1000 daily.
         word_list = ["BTC_BCH", "BTC_ETH", "BTC_DASH", "BTC_ZRX", "BTC_LTC", "BTC_XMR", "BTC_XRP", "BTC_ZEC", "BTC_FCT", "BTC_XEM"]
         # Let's just use 5 for now... keeps things going quicker.
         for word in word_list:
+            # initiate the data calculations
             df = Chart(api, word).dataFrame()
             df.dropna(inplace=False)
             data = (df.tail(2)[['macd']])
+            #Turn Data into a string
             txt=str(data)
+            print(data)
+            # search for floats in the returned data
             re1='.*?'	# Non-greedy match on filler
             re2='([+-]?\\d*\\.\\d+)(?![-+0-9\\.])'	# Float 1
             re3='.*?'	# Non-greedy match on filler
             re4='([+-]?\\d*\\.\\d+)(?![-+0-9\\.])'	# Float 2
-
             rg = re.compile(re1+re2+re3+re4,re.IGNORECASE|re.DOTALL)
             m = rg.search(txt)
-            print(data)
+            # Search for floats that are too small to trade decision on
             re1='.*?'	# Non-greedy match on filler
             re2='([+-]?\\d*\\.\\d+)(?![-+0-9\\.])'	# Float 1
             re3='((?:[a-z][a-z0-9_]*))'	# Variable Name 1
@@ -192,25 +195,29 @@ def run():
             re6='([+-]?\\d*\\.\\d+)(?![-+0-9\\.])'	# Float 2
             re7='((?:[a-z][a-z0-9_]*))'	# Variable Name 2
             re8='([-+]\\d+)'	# Integer Number 2
-
             rg = re.compile(re1+re2+re3+re4+re5+re6+re7+re8,re.IGNORECASE|re.DOTALL)
             deny = rg.search(txt)
+            # Two if statements to decide what will happen... buy/sell/deny trade on limited data
             if m:
                 if deny:
                     print(word + ' -- Percent changed too small to care')
                 else:
+                    # Set the floats from the data that are real numbers
                     float1=m.group(1)
                     float2=m.group(2)
                     float3 = float(float1)
                     float4 = float(float2)
+                    # Calculate the difference in the two numbers
                     diff = Decimal(float(abs(abs(float4) - abs(float3))))
                     diffstr = str(diff)
-                    # Dont worry about below... it buys only when macd is increasing else sell... can be good if trades go through quick.
+                    # If Macd is not positive, then sell
                     if (Decimal(float4) > 0.00005):
+                        # If macd's difference is under a fluctuation amount, do nothing.. this could reduce error rate.
                         if (0.000005 > Decimal(diff)):
                             print(word, Decimal(float3), Decimal(float4))
                             print('Current diff is: ' + diffstr)
                             print('Doing nothing on minor flux down to 0.000005')
+                        # If Macd is increasing and positive and above 0.000005, then simply buy
                         elif (Decimal(float4) > Decimal(float3)):
                             print(word, Decimal(float3), Decimal(float4))
                             print('Current diff is: ' + diffstr)
@@ -220,7 +227,7 @@ def run():
                             buystr=ke8
                             m = buy()
                             m.start()
-    
+                        # For Everything decreasing and outside of fluctuation window, then sell
                         else:
                             print(word, Decimal(float3), Decimal(float4))
                             print('Current diff is: ' + diffstr)
@@ -230,6 +237,7 @@ def run():
                             sellstr=ke10
                             m = sell()
                             m.start()
+                    # For Everything negative, sell
                     else:
                         print(word, Decimal(float3), Decimal(float4))
                         print('Current diff is: ' + diffstr)
