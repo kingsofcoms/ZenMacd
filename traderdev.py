@@ -205,21 +205,18 @@ def run():
                         buystr=ke8
                         m = buy()
                         m.start()
-                        # Do nothing on a minor negative flux in macd 0.000005
 
                     else:
                         print(word, float1, float2)
-                        print(word+ 'Waiting for profits')
+                        print('Current diff is: ' + diffstr)
+                        ke1=word.replace('BTC_', '')
+                        ke3='-BTC'
+                        ke10=ke1+ke3
+                        sellstr=ke10
+                        m = sell()
+                        m.start()
 
-                else:
-                    print(word, float1, float2)
-                    print('Current diff is: ' + diffstr)
-                    ke1=word.replace('BTC_', '')
-                    ke3='-BTC'
-                    ke10=ke1+ke3
-                    sellstr=ke10
-                    m = sell()
-                    m.start()
+
 
 def buy():
     return multiprocessing.Process(target = buybuy , args = ())
@@ -241,6 +238,13 @@ def sellsell():
     print('Starting SELL Of: ' + variablestr + ' -- Please always sell 100% and buy with low percentage.')
     process1='./zenbot.sh sell --order_adjust_time=10000 --markup_pct=0 --debug  poloniex.' + variablestr	
     subprocess.Popen(process1,shell=True)
+
+
+
+
+
+
+
 
 
 if __name__ == '__main__':
