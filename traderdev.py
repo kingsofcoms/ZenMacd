@@ -193,12 +193,12 @@ def run():
                 diffstr = str(diff)
                 # Dont worry about below... it buys only when macd is increasing else sell... can be good if trades go through quick.
                 if (Decimal(float4) > 0.00005):
-                    if (0.000005 > diff):
-                        print(word, Decimal(float1), Decimal(float2))
+                    if (0.000005 > Decimal(diff)):
+                        print(word, Decimal(float3), Decimal(float4))
                         print('Current diff is: ' + diffstr)
                         print('Doing nothing on minor flux down to 0.000005')
                     elif (Decimal(float4) > Decimal(float3)):
-                        print(word, Decimal(float1), Decimal(float2))
+                        print(word, Decimal(float3), Decimal(float4))
                         print('Current diff is: ' + diffstr)
                         ke1=word.replace('BTC_', '')
                         ke3='-BTC'
@@ -208,7 +208,7 @@ def run():
                         m.start()
 
                     else:
-                        print(word, Decimal(float1), Decimal(float2))
+                        print(word, Decimal(float3), Decimal(float4))
                         print('Current diff is: ' + diffstr)
                         ke1=word.replace('BTC_', '')
                         ke3='-BTC'
@@ -217,7 +217,7 @@ def run():
                         m = sell()
                         m.start()
                 else:
-                    print(word, Decimal(float1), Decimal(float2))
+                    print(word, Decimal(float3), Decimal(float4))
                     print('Current diff is: ' + diffstr)
                     ke1=word.replace('BTC_', '')
                     ke3='-BTC'
@@ -256,7 +256,4 @@ if __name__ == '__main__':
     #logging.getLogger('requests').setLevel(logging.ERROR)
     api = Poloniex(jsonNums=float)
     run()
-
-
-
-    
+ 
