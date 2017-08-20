@@ -5,7 +5,7 @@ from operator import itemgetter
 from pymongo import MongoClient
 import pandas as pd
 import numpy as np
-import json, requests, re, multiprocessing, subprocess, time
+import json, requests, re, multiprocessing, subprocess
 global buystr
 global sellstr
 logger = logging.getLogger(__name__)
@@ -208,7 +208,8 @@ def run():
                         # Do nothing on a minor negative flux in macd 0.000005
 
                     else:
-                        print('Waiting for profits')
+                        print(word, float1, float2)
+                        print(word+ 'Waiting for profits')
 
                 else:
                     print(word, float1, float2)
@@ -242,13 +243,6 @@ def sellsell():
     subprocess.Popen(process1,shell=True)
 
 
-
-
-
-
-
-
-
 if __name__ == '__main__':
     from poloniex import Poloniex
     #logging.basicConfig(level=logging.DEBUG)
@@ -256,4 +250,7 @@ if __name__ == '__main__':
     #logging.getLogger('requests').setLevel(logging.ERROR)
     api = Poloniex(jsonNums=float)
     run()
-   
+
+
+
+    
