@@ -5,7 +5,7 @@ from operator import itemgetter
 from pymongo import MongoClient
 import pandas as pd
 import numpy as np
-import json, requests, re, multiprocessing, subprocess, time
+import json, requests, re, multiprocessing, subprocess
 global buystr
 global sellstr
 logger = logging.getLogger(__name__)
