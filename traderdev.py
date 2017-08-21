@@ -1,5 +1,6 @@
 from __future__ import print_function
 from time import time
+from time import sleep
 import logging
 from operator import itemgetter
 from pymongo import MongoClient
@@ -168,8 +169,9 @@ def run():
     while True:
         global buystr
         global sellstr
+        sleep(5)
         # Below is the coin list, please follow its format... I choose coins with volume above 1000 daily.
-        word_list = ["BTC_BCH", "BTC_ETH", "BTC_DASH", "BTC_ZRX", "BTC_LTC", "BTC_XMR", "BTC_XRP", "BTC_ZEC", "BTC_FCT", "BTC_XEM"]
+        word_list = ["BTC_BCH"]
         # Let's just use 5 for now... keeps things going quicker.
         for word in word_list:
             # initiate the data calculations
@@ -208,15 +210,30 @@ def run():
                     float3 = float(float1)
                     float4 = float(float2)
                     # Calculate the difference in the two numbers
-                    diff = Decimal(float(abs(abs(float4) - abs(float3))))
+                    diff = Decimal(float(float4 - float3))
                     diffstr = str(diff)
                     # If Macd is not positive, then sell
                     if (Decimal(float4) > 0.00005):
-                        # If macd's difference is under a fluctuation amount, do nothing.. this could reduce error rate.
-                        if (0.000005 > Decimal(diff)):
+                        # Buy on increasing difference
+                        if (0 < Decimal(diff)):
                             print(word, Decimal(float3), Decimal(float4))
                             print('Current diff is: ' + diffstr)
-                            print('Doing nothing on minor flux down to 0.000005')
+                            ke1=word.replace('BTC_', '')
+                            ke3='-BTC'
+                            ke8=ke1+ke3
+                            buystr=ke8
+                            m = buy()
+                            m.start()
+                        # Sell on decreasing difference
+                        elif (0 > Decimal(diff)):
+                            print(word, Decimal(float3), Decimal(float4))
+                            print('Current diff is: ' + diffstr)
+                            ke1=word.replace('BTC_', '')
+                            ke3='-BTC'
+                            ke10=ke1+ke3
+                            sellstr=ke10
+                            m = sell()
+                            m.start()
                         # If Macd is increasing and positive and above 0.000005, then simply buy
                         elif (Decimal(float4) > Decimal(float3)):
                             print(word, Decimal(float3), Decimal(float4))
