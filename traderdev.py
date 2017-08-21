@@ -213,7 +213,7 @@ def run():
                     diff = Decimal(float(float4 - float3))
                     diffstr = str(diff)
                     # If Macd is not positive, then sell
-                    if (Decimal(diff) > 0.00005):
+                    if (Decimal(float3) > 0.00005):
                         # Buy on increasing difference that is in the general positive macd
                         if (0 < Decimal(diff)):
                             print(word, Decimal(float3), Decimal(float4))
