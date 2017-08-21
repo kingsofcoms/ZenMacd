@@ -171,7 +171,7 @@ def run():
         global sellstr
         sleep(5)
         # Below is the coin list, please follow its format... I choose coins with volume above 1000 daily.
-        word_list = ["BTC_BCH"]
+        word_list = ["BTC_BCH", "BTC_ETH", "BTC_DASH", "BTC_XRP", "BTC_LSK"]
         # Let's just use 5 for now... keeps things going quicker.
         for word in word_list:
             # initiate the data calculations
@@ -213,7 +213,7 @@ def run():
                     diff = Decimal(float(float4 - float3))
                     diffstr = str(diff)
                     # If Macd is not positive, then sell
-                    if (Decimal(float4) > 0.00005):
+                    if (Decimal(diff) > 0.00005):
                         # Buy on increasing difference that is in the general positive macd
                         if (0 < Decimal(diff)):
                             print(word, Decimal(float3), Decimal(float4))
@@ -295,3 +295,7 @@ if __name__ == '__main__':
     #logging.getLogger('requests').setLevel(logging.ERROR)
     api = Poloniex(jsonNums=float)
     run()
+
+
+
+    
