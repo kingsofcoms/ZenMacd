@@ -215,7 +215,7 @@ def run():
                     if (Decimal(float4) == 0):
                         print(word + ' -- Not Enough Data On This Measurement')
                     # If Macd is not positive, then sell
-                    elif (Decimal(float4) > 0.00001):
+                    elif (Decimal(float) > 0.00001):
                         if (Decimal(float4) > Decimal(float3)):
                             print(word, Decimal(float3), Decimal(float4))
                             print('Current diff is: ' + diffstr)
@@ -226,7 +226,7 @@ def run():
                             m = buy()
                             m.start()
                         # Buy on increasing difference that is in the general positive macd
-                        elif (0 < Decimal(diff)):
+                        elif (0 < Decimal(float4)):
                             print(word, Decimal(float3), Decimal(float4))
                             print('Current diff is: ' + diffstr)
                             ke1=word.replace('BTC_', '')
@@ -236,7 +236,7 @@ def run():
                             m = buy()
                             m.start()
                         # Sell on decreasing difference
-                        elif (0 > Decimal(diff)):
+                        elif (0 > Decimal(float4)):
                             print(word, Decimal(float3), Decimal(float4))
                             print('Current diff is: ' + diffstr)
                             ke1=word.replace('BTC_', '')
