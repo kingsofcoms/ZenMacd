@@ -214,7 +214,7 @@ def run():
                     diffstr = str(diff)
                     # If Macd is not positive, then sell
                     if (Decimal(float4) > 0.00005):
-                        # Buy on increasing difference
+                        # Buy on increasing difference that is in the general positive macd
                         if (0 < Decimal(diff)):
                             print(word, Decimal(float3), Decimal(float4))
                             print('Current diff is: ' + diffstr)
