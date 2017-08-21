@@ -226,6 +226,16 @@ def run():
                             m = buy()
                             m.start()
                         # Buy on increasing difference that is in the general positive macd
+                        elif (0 < Decimal(float3)):
+                            print(word, Decimal(float3), Decimal(float4))
+                            print('Current diff is: ' + diffstr)
+                            ke1=word.replace('BTC_', '')
+                            ke3='-BTC'
+                            ke8=ke1+ke3
+                            buystr=ke8
+                            m = buy()
+                            m.start()
+
                         elif (0 < Decimal(float4)):
                             print(word, Decimal(float3), Decimal(float4))
                             print('Current diff is: ' + diffstr)
@@ -237,6 +247,15 @@ def run():
                             m.start()
                         # Sell on decreasing difference
                         elif (0 > Decimal(float3)):
+                            print(word, Decimal(float3), Decimal(float4))
+                            print('Current diff is: ' + diffstr)
+                            ke1=word.replace('BTC_', '')
+                            ke3='-BTC'
+                            ke10=ke1+ke3
+                            sellstr=ke10
+                            m = sell()
+                            m.start()
+                        elif (0 > Decimal(float4)):
                             print(word, Decimal(float3), Decimal(float4))
                             print('Current diff is: ' + diffstr)
                             ke1=word.replace('BTC_', '')
