@@ -235,15 +235,15 @@ def run():
                             m = sell()
                             m.start()
                         # If Macd is increasing and positive and above 0.000005, then simply buy
-                        elif (Decimal(float4) > Decimal(float3)):
-                            print(word, Decimal(float3), Decimal(float4))
-                            print('Current diff is: ' + diffstr)
-                            ke1=word.replace('BTC_', '')
-                            ke3='-BTC'
-                            ke8=ke1+ke3
-                            buystr=ke8
-                            m = buy()
-                            m.start()
+                        # elif (Decimal(float4) > Decimal(float3)):
+                            # print(word, Decimal(float3), Decimal(float4))
+                            # print('Current diff is: ' + diffstr)
+                            # ke1=word.replace('BTC_', '')
+                            # ke3='-BTC'
+                            # ke8=ke1+ke3
+                            # buystr=ke8
+                            # m = buy()
+                            # m.start()
                         # For Everything decreasing and outside of fluctuation window, then sell
                         else:
                             print(word, Decimal(float3), Decimal(float4))
