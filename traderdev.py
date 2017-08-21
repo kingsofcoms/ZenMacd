@@ -212,7 +212,9 @@ def run():
                     # Calculate the difference in the two numbers
                     diff = Decimal(float(float4 - float3))
                     diffstr = str(diff)
-                    if (Decimal(float4) == 0):
+                    if (Decimal(float3) == 0):
+                        print(word + ' -- Not Enough Data On This Measurement')
+                    elif (Decimal(float4) == 0):
                         print(word + ' -- Not Enough Data On This Measurement')
                     # If Macd is not positive, then sell
                     elif (Decimal(float3) > 0.00001):
