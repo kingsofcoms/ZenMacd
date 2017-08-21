@@ -217,7 +217,7 @@ def run():
                     elif (Decimal(float4) == 0):
                         print(word + ' -- Not Enough Data On This Measurement')
                     # If Macd is not positive, then sell
-                    elif (Decimal(float3) > 0.00001):
+                    elif (Decimal(float3) > 0.0002):
                         if (Decimal(float4) > Decimal(float3)):
                             print(word, Decimal(float3), Decimal(float4))
                             print('Current diff is: ' + diffstr)
