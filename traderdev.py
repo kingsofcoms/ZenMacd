@@ -177,7 +177,7 @@ def run():
             # initiate the data calculations
             df = Chart(api, word).dataFrame()
             df.dropna(inplace=False)
-            data = (df.tail(2)[['macd']])
+            data = (df.tail(2)[['percentChange']])
             #Turn Data into a string
             txt=str(data)
             print(data)
@@ -295,7 +295,3 @@ if __name__ == '__main__':
     #logging.getLogger('requests').setLevel(logging.ERROR)
     api = Poloniex(jsonNums=float)
     run()
-
-
-
-    
