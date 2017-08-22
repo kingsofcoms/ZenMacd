@@ -1,12 +1,11 @@
 from __future__ import print_function
 from time import time
-from time import sleep
 import logging
 from operator import itemgetter
 from pymongo import MongoClient
 import pandas as pd
 import numpy as np
-import json, requests, re, multiprocessing, subprocess
+import json, requests, re, multiprocessing, subprocess, time
 global buystr
 global sellstr
 logger = logging.getLogger(__name__)
@@ -169,7 +168,7 @@ def run():
         global buystr
         global sellstr
         # EXAMPLE WITH ALL STRINGS: word_list = ["BTC_DCR", "BTC_LTC", "BTC_NAUT", "BTC_NXT", "BTC_XCP", "BTC_GRC", "BTC_REP", "BTC_PPC", "BTC_RIC", "BTC_STRAT", "BTC_GAME", "BTC_BTM", "BTC_CLAM", "BTC_ARDR", "BTC_BLK", "BTC_OMNI", "BTC_SJCX", "BTC_FLDC", "BTC_BCH", "BTC_DOGE", "BTC_POT", "BTC_VRC", "BTC_ETH", "BTC_PINK", "BTC_NOTE", "BTC_BTS", "BTC_AMP", "BTC_NAV", "BTC_BELA", "BTC_BCN", "BTC_ETC", "BTC_FLO", "BTC_VIA", "BTC_XBC", "BTC_XPM", "BTC_DASH", "BTC_XVC", "BTC_GNO", "BTC_NMC", "BTC_RADS", "BTC_VTC", "BTC_XEM", "BTC_FCT", "BTC_XRP", "BTC_NXC", "BTC_STEEM", "BTC_SBD", "BTC_BURST", "BTC_XMR", "BTC_DGB", "BTC_LBC", "BTC_BCY", "BTC_PASC", "BTC_SC", "BTC_LSK", "BTC_EXP", "BTC_MAID", "BTC_BTCD", "BTC_SYS", "BTC_GNT", "BTC_HUC", "BTC_EMC2", "BTC_NEOS", "BTC_ZEC", "BTC_STR"]
-        word_list = ["BTC_BCH", "BTC_ETH", "BTC_LTC", "BTC_DASH", "BTC_XRP", "BTC_FCT", "BTC_STRAT", "BTC_STR", "BTC_ETC", "BTC_XMR"]
+        word_list = ["BTC_DCR", "BTC_LTC", "BTC_NAUT", "BTC_NXT", "BTC_XCP", "BTC_GRC", "BTC_REP", "BTC_PPC", "BTC_RIC", "BTC_STRAT", "BTC_GAME", "BTC_BTM", "BTC_CLAM", "BTC_ARDR", "BTC_BLK", "BTC_OMNI", "BTC_SJCX", "BTC_FLDC", "BTC_BCH", "BTC_DOGE", "BTC_POT", "BTC_VRC", "BTC_ETH", "BTC_PINK", "BTC_NOTE", "BTC_BTS", "BTC_AMP", "BTC_NAV", "BTC_BELA", "BTC_BCN", "BTC_ETC", "BTC_FLO", "BTC_VIA", "BTC_XBC", "BTC_XPM", "BTC_DASH", "BTC_XVC", "BTC_GNO", "BTC_NMC", "BTC_RADS", "BTC_VTC", "BTC_XEM", "BTC_FCT", "BTC_XRP", "BTC_NXC", "BTC_STEEM", "BTC_SBD", "BTC_BURST", "BTC_XMR", "BTC_DGB", "BTC_LBC", "BTC_BCY", "BTC_PASC", "BTC_SC", "BTC_LSK", "BTC_EXP", "BTC_MAID", "BTC_BTCD", "BTC_SYS", "BTC_GNT", "BTC_HUC", "BTC_EMC2", "BTC_NEOS", "BTC_ZEC", "BTC_STR"]
         # Let's just use 5 for now... keeps things going quicker.
         for word in word_list:
             df = Chart(api, word).dataFrame()
@@ -178,14 +177,17 @@ def run():
             txt=str(data)
             re1='.*?'	# Non-greedy match on filler
             re2='([+-]?\\d*\\.\\d+)(?![-+0-9\\.])'	# Float 1
-            rg = re.compile(re1+re2,re.IGNORECASE|re.DOTALL)
+            re3='.*?'	# Non-greedy match on filler
+            re4='([+-]?\\d*\\.\\d+)(?![-+0-9\\.])'	# Float 1
+            rg = re.compile(re1+re2+re3+re4,re.IGNORECASE|re.DOTALL)
             m = rg.search(txt)
             if m:
                 float1=m.group(1)
                 print(word, float1)
                 float2 = float(float1)
-                # Set the below number for minimum macd buy... basically if its going up or down.. .0001 seems better, but this can delay a buy. Don't pick ie DGB.. Too much price Flux..
-                if float2 > .0001:
+                # Set the below number for minimum macd buy 0.00005 seems good to prevent worthless coins from skewing your results or dont pick those ie DGB....
+                # Also, the more you increase this, the faster your system will trade before a loss, but will also incrase your chances of not making a buy soon enough.
+                if float2 > 1:
                     ke1=word.replace('BTC_', '')
                     ke3='-BTC'
                     ke8=ke1+ke3
@@ -199,7 +201,6 @@ def run():
                     sellstr=ke10
                     m = sell()
                     m.start()
-
 def buy():
     return multiprocessing.Process(target = buybuy , args = ())
  
@@ -231,9 +232,9 @@ def sellsell():
 
 if __name__ == '__main__':
     from poloniex import Poloniex
-    logging.basicConfig(level=logging.DEBUG)
-    logging.getLogger("poloniex").setLevel(logging.INFO)
-    logging.getLogger('requests').setLevel(logging.ERROR)
+    #logging.basicConfig(level=logging.DEBUG)
+    #logging.getLogger("poloniex").setLevel(logging.INFO)
+    #logging.getLogger('requests').setLevel(logging.ERROR)
     api = Poloniex(jsonNums=float)
     run()
 
