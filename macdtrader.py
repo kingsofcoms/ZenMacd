@@ -169,7 +169,6 @@ def run():
     while True:
         global buystr
         global sellstr
-        sleep(5)
         # Below is the coin list, please follow its format... I choose coins with volume above 1000 daily.
         word_list = ["BTC_ETH", "BTC_XMR", "BTC_XRP", "BTC_BCH", "BTC_LTC"]
         # Let's just use 5 for now... keeps things going quicker.
@@ -240,6 +239,8 @@ def run():
         
                     else:
                         print('Waiting...')
+            print('Waiting 15s so polo does not overload')
+            sleep(15)
 
 
 
