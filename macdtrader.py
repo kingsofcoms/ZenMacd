@@ -207,10 +207,10 @@ def run():
                     # Set the floats from the data that are real numbers
                     float1=m.group(1)
                     float2=m.group(2)
-                    float4 = float(float1)
-                    float5 = float(float2)
+                    float3 = float(float1)
+                    float4 = float(float2)
                     # Calculate the difference in the two numbers
-                    diff = Decimal(float(float5 - float4))
+                    diff = Decimal(float(float4 - float3))
                     diffstr = str(diff)
                     if (Decimal(float3) == 0):
                         print(word + ' -- Not Enough Data On This Measurement')
