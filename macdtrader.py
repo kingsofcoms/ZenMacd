@@ -186,9 +186,7 @@ def run():
             re2='([+-]?\\d*\\.\\d+)(?![-+0-9\\.])'	# Float 1
             re3='.*?'	# Non-greedy match on filler
             re4='([+-]?\\d*\\.\\d+)(?![-+0-9\\.])'	# Float 2
-            re5='.*?'	# Non-greedy match on filler
-            re6='([+-]?\\d*\\.\\d+)(?![-+0-9\\.])'	# Float 3
-            rg = re.compile(re1+re2+re3+re4+re5+re6,re.IGNORECASE|re.DOTALL)
+            rg = re.compile(re1+re2+re3+re4,re.IGNORECASE|re.DOTALL)
             m = rg.search(txt)
             # Search for floats that are too small to trade decision on
             re1='.*?'	# Non-greedy match on filler
