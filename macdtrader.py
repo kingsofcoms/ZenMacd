@@ -177,7 +177,7 @@ def run():
             # initiate the data calculations
             df = Chart(api, word).dataFrame()
             df.dropna(inplace=False)
-            data = (df.tail(3)[['macd']])
+            data = (df.tail(2)[['macd']])
             #Turn Data into a string
             txt=str(data)
             print(data)
@@ -209,10 +209,8 @@ def run():
                     # Set the floats from the data that are real numbers
                     float1=m.group(1)
                     float2=m.group(2)
-                    float3=m.group(3)
                     float4 = float(float1)
                     float5 = float(float2)
-                    float6 = float(float3)
                     # Calculate the difference in the two numbers
                     diff = Decimal(float(float5 - float4))
                     diffstr = str(diff)
