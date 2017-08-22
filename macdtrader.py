@@ -238,6 +238,8 @@ def run():
          
         
                     else:
+                        print(word, Decimal(float3), Decimal(float4))
+                        print('Current diff is: ' + diffstr)
                         print('Waiting...')
             print('Waiting 15s so polo does not overload')
             sleep(15)
