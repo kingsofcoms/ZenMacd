@@ -217,32 +217,63 @@ def run():
                         print(word + ' -- Not Enough Data On This Measurement')
                     # If Macd is not positive, then sell
                     
-                    elif (diff > 0.000002):
-                        print(word, Decimal(float3), Decimal(float4))
-                        print('Current diff is: ' + diffstr)
-                        ke1=word.replace('BTC_', '')
-                        ke3='-BTC'
-                        ke8=ke1+ke3
-                        buystr=ke8
-                        m = buy()
-                        m.start()
-                    elif ( 0.000002 >= diff):
+                    elif (float4 > 0.000002):
+                        print('Check 1 Reached - Macd is positive')
+                        if (diff > 0.000002):
+                            print('Check 2 Reached - Buying')
+                            print(word, Decimal(float3), Decimal(float4))
+                            print('Current diff is: ' + diffstr)
+                            ke1=word.replace('BTC_', '')
+                            ke3='-BTC'
+                            ke8=ke1+ke3
+                            buystr=ke8
+                            print('Buying on Uptrend')
+                            m = buy()
+                            m.start()
+                        elif (float4 < 0.000002):
+                            print(word, Decimal(float3), Decimal(float4))
+                            print('Current diff is: ' + diffstr)
+                            ke1=word.replace('BTC_', '')
+                            ke3='-BTC'
+                            ke8=ke1+ke3
+                            sellstr=ke8
+                            print('Selling on Downtrend, macd less than 0.000002')
+                            m = sell()
+                            m.start()
+                        elif (diff < 0.000002):
+                            print(word, Decimal(float3), Decimal(float4))
+                            print('Current diff is: ' + diffstr)
+                            ke1=word.replace('BTC_', '')
+                            ke3='-BTC'
+                            ke8=ke1+ke3
+                            sellstr=ke8
+                            print('Selling on Downtrend, diff less than 0.000002')
+                            m = sell()
+                            m.start()
+                    elif (float4 < 0.000002):
                         print(word, Decimal(float3), Decimal(float4))
                         print('Current diff is: ' + diffstr)
                         ke1=word.replace('BTC_', '')
                         ke3='-BTC'
                         ke8=ke1+ke3
                         sellstr=ke8
+                        print('Selling on Downtrend, macd less than 0.000002')
                         m = sell()
                         m.start()
-         
-        
+                    elif (diff < 0.000002):
+                        print(word, Decimal(float3), Decimal(float4))
+                        print('Current diff is: ' + diffstr)
+                        ke1=word.replace('BTC_', '')
+                        ke3='-BTC'
+                        ke8=ke1+ke3
+                        sellstr=ke8
+                        print('Selling on Downtrend, diff less than 0.000002')
+                        m = sell()
+                        m.start()
                     else:
                         print(word, Decimal(float3), Decimal(float4))
                         print('Current diff is: ' + diffstr)
                         print('Waiting...')
-            print('Waiting 15s so polo does not overload')
-            sleep(15)
 
 
 
@@ -264,7 +295,7 @@ def sellsell():
     variable=str(sellstr)
     variablestr=str(variable)
     print('Starting SELL Of: ' + variablestr + ' -- Macd Is Decreasing')
-    process1='./zenbot.sh sell --order_adjust_time=10000 --markup_pct=0 --debug  poloniex.' + variablestr	
+    process1='./zenbot.sh sell --order_adjust_time=10000 --debug  poloniex.' + variablestr	
     subprocess.Popen(process1,shell=True)
 
 if __name__ == '__main__':
