@@ -217,7 +217,7 @@ def run():
                         print(word + ' -- Not Enough Data On This Measurement')
                     # If Macd is not positive, then sell
                     
-                    elif (diff > 0):
+                    elif (diff > 0.000002):
                         print(word, Decimal(float3), Decimal(float4))
                         print('Current diff is: ' + diffstr)
                         ke1=word.replace('BTC_', '')
@@ -226,7 +226,7 @@ def run():
                         buystr=ke8
                         m = buy()
                         m.start()
-                    elif ( 0 >= diff):
+                    elif ( 0.000002 >= diff):
                         print(word, Decimal(float3), Decimal(float4))
                         print('Current diff is: ' + diffstr)
                         ke1=word.replace('BTC_', '')
