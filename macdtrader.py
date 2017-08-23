@@ -177,9 +177,10 @@ def run():
             df = Chart(api, word).dataFrame()
             df.dropna(inplace=False)
             data = (df.tail(2)[['macd']])
+            data1 = (df.tail(2)[['percentChange']])
             #Turn Data into a string
             txt=str(data)
-            print(data)
+            txt1=str(data1)
             # search for floats in the returned data
             re1='.*?'	# Non-greedy match on filler
             re2='([+-]?\\d*\\.\\d+)(?![-+0-9\\.])'	# Float 1
@@ -187,6 +188,12 @@ def run():
             re4='([+-]?\\d*\\.\\d+)(?![-+0-9\\.])'	# Float 2
             rg = re.compile(re1+re2+re3+re4,re.IGNORECASE|re.DOTALL)
             m = rg.search(txt)
+            re1='.*?'	# Non-greedy match on filler
+            re2='([+-]?\\d*\\.\\d+)(?![-+0-9\\.])'	# Float 1
+            re3='.*?'	# Non-greedy match on filler
+            re4='([+-]?\\d*\\.\\d+)(?![-+0-9\\.])'	# Float 2
+            rg = re.compile(re1+re2+re3+re4,re.IGNORECASE|re.DOTALL)
+            pct = rg.search(txt1)
             # Search for floats that are too small to trade decision on
             re1='.*?'	# Non-greedy match on filler
             re2='([+-]?\\d*\\.\\d+)(?![-+0-9\\.])'	# Float 1
@@ -208,21 +215,29 @@ def run():
                     float2=m.group(2)
                     float3 = float(float1)
                     float4 = float(float2)
+                    float5=pct.group(1)
+                    float6=pct.group(2)
+                    float7 = float(float5)
+                    float8 = float(float6)
                     # Calculate the difference in the two numbers
                     diff = Decimal(float(float4 - float3))
+                    diffpct = Decimal(float(float8 - float7))
                     diffstr = str(diff)
+                    pctstr = str(diffpct)
+                    print(data)
+                    print(data1)
                     if (Decimal(float3) == 0):
                         print(word + ' -- Not Enough Data On This Measurement')
                     elif (Decimal(float4) == 0):
                         print(word + ' -- Not Enough Data On This Measurement')
                     # If Macd is not positive, then sell
                     
-                    elif (float4 > 0.000002):
+                    elif (float4 > 0.000001):
                         print('Check 1 Reached - Macd is positive')
-                        if (diff > 0.000002):
+                        if (diff > 0.000001):
                             print('Check 2 Reached - Buying')
-                            print(word, Decimal(float3), Decimal(float4))
-                            print('Current diff is: ' + diffstr)
+                            print(word)
+                            print('Current macd diff is: ' + diffstr + ' -- and current pctchange vs last percentchange is: ' + pctstr )
                             ke1=word.replace('BTC_', '')
                             ke3='-BTC'
                             ke8=ke1+ke3
@@ -230,49 +245,29 @@ def run():
                             print('Buying on Uptrend')
                             m = buy()
                             m.start()
-                        elif (float4 < 0.000002):
-                            print(word, Decimal(float3), Decimal(float4))
-                            print('Current diff is: ' + diffstr)
+                        elif (Decimal(float8) < 0.000001):
+                            print(word)
+                            print('Current macd diff is: ' + diffstr + ' -- and current pctchange vs last percentchange is: ' + pctstr )
                             ke1=word.replace('BTC_', '')
                             ke3='-BTC'
                             ke8=ke1+ke3
                             sellstr=ke8
-                            print('Selling on Downtrend, macd less than 0.000002')
+                            print('Selling on Downtrend, diff less than 0.000003')
                             m = sell()
                             m.start()
-                        elif (diff < 0.000002):
-                            print(word, Decimal(float3), Decimal(float4))
-                            print('Current diff is: ' + diffstr)
-                            ke1=word.replace('BTC_', '')
-                            ke3='-BTC'
-                            ke8=ke1+ke3
-                            sellstr=ke8
-                            print('Selling on Downtrend, diff less than 0.000002')
-                            m = sell()
-                            m.start()
-                    elif (float4 < 0.000002):
-                        print(word, Decimal(float3), Decimal(float4))
-                        print('Current diff is: ' + diffstr)
+                    elif (Decimal(float8) < 0.000001):
+                        print(word)
+                        print('Current macd diff is: ' + diffstr + ' -- and current pctchange vs last percentchange is: ' + pctstr )
                         ke1=word.replace('BTC_', '')
                         ke3='-BTC'
                         ke8=ke1+ke3
                         sellstr=ke8
-                        print('Selling on Downtrend, macd less than 0.000002')
-                        m = sell()
-                        m.start()
-                    elif (diff < 0.000002):
-                        print(word, Decimal(float3), Decimal(float4))
-                        print('Current diff is: ' + diffstr)
-                        ke1=word.replace('BTC_', '')
-                        ke3='-BTC'
-                        ke8=ke1+ke3
-                        sellstr=ke8
-                        print('Selling on Downtrend, diff less than 0.000002')
+                        print('Selling on Downtrend, diff less than 0.000003')
                         m = sell()
                         m.start()
                     else:
-                        print(word, Decimal(float3), Decimal(float4))
-                        print('Current diff is: ' + diffstr)
+                        print(word)
+                        print('Current macd diff is: ' + diffstr + ' -- and current pctchange vs last percentchange is: ' + pctstr )
                         print('Waiting...')
 
 
