@@ -170,7 +170,7 @@ def run():
         global buystr
         global sellstr
         # Below is the coin list, please follow its format... I choose coins with volume above 1000 daily.
-        word_list = ["BTC_ETH", "BTC_XMR", "BTC_XRP", "BTC_BCH", "BTC_LTC"]
+        word_list = ["BTC_XRP", "BTC_ETH", "BTC_XMR", "BTC_BCH", "BTC_STR", "BTC_LTC", "BTC_DASH", "BTC_ETC", "BTC_STRAT", "BTC_BTS"]
         # Let's just use 5 for now... keeps things going quicker.
         for word in word_list:
             # initiate the data calculations
@@ -226,7 +226,7 @@ def run():
                         buystr=ke8
                         m = buy()
                         m.start()
-                    elif ( 0 > diff):
+                    elif ( 0 >= diff):
                         print(word, Decimal(float3), Decimal(float4))
                         print('Current diff is: ' + diffstr)
                         ke1=word.replace('BTC_', '')
@@ -254,7 +254,7 @@ def buybuy():
     variable=str(buystr)
     variablestr=str(variable)
     print('Starting BUY Of: ' + variablestr + ' -- MACD Is Increasing')
-    process1='./zenbot.sh buy --order_adjust_time=10000 --markup_pct=0 --debug  poloniex.' + variablestr	
+    process1='./zenbot.sh buy --order_adjust_time=10000 --debug  poloniex.' + variablestr	
     subprocess.Popen(process1,shell=True)
 def sell():
     return multiprocessing.Process(target = sellsell , args = ())
