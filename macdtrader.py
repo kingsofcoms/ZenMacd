@@ -12,7 +12,7 @@ global buystr
 global sellstr
 logger = logging.getLogger(__name__)
 
-# Please dont use this version... THANKS.. it does NOT work.
+# Please dont use this version... THANKS.. it does NOT work, it is STILL IN DEVELOPMENT.
 def rsi(df, window, targetcol='weightedAverage', colname='rsi'):
     """ Calculates the Relative Strength Index (RSI) from a pandas dataframe
     http://stackoverflow.com/a/32346692/3389859
